@@ -24,4 +24,7 @@ export default {
 .wrap {
   height: 100%;
 }
+.el-header {
+  background: #333;
+}
 </style>
