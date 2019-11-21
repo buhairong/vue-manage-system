@@ -2,6 +2,10 @@
   <header>
     <div class="l-content">
       <el-button type="primary" icon="el-icon-menu" size="mini"></el-button>
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item :to="current.path" v-if="current">{{ current.label }}</el-breadcrumb-item>
+      </el-breadcrumb>
     </div>
     <div class="r-content">
       <el-dropdown trigger="click" size="mini">
@@ -16,7 +20,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
+  computed: {
+    ...mapState({
+      current: state => state.tab.currentMenu
+    })
+  },
   data() {
     return {
       userImg: require('../assets/images/user.png')
@@ -31,6 +41,16 @@ header {
   height: 100%;
   align-items: center;
   justify-content: space-between;
+  .l-content {
+    display: flex;
+    align-items: center;
+    .el-button {
+      margin-right: 20px;
+    }
+    /deep/ .el-breadcrumb__inner.is-link {
+      color: #fff;
+    }
+  }
   .r-content {
     .user {
       width: 40px;

@@ -1,6 +1,6 @@
 <template>
   <el-menu default-active="1" class="el-menu-vertical-demo" background-color="#33aef0" text-color="#fff" active-text-color="#ffd04b">
-    <el-menu-item :index="item.path" v-for="item in noChildren" :key="item.path">
+    <el-menu-item :index="item.path" v-for="item in noChildren" :key="item.path" @click="clickMenu(item)">
       <i :class="`el-icon-${item.icon}`"></i>
       <span slot="title">{{ item.label }}</span>
     </el-menu-item>
@@ -10,7 +10,7 @@
         <span>{{ item.label }}</span>
       </template>
       <el-menu-item-group>
-        <el-menu-item :index="subItem.path" v-for="subItem in item.children" :key="subItem.path">{{ subItem.label }}</el-menu-item>
+        <el-menu-item :index="subItem.path" v-for="subItem in item.children" :key="subItem.path" @click="clickMenu(subItem)">{{ subItem.label }}</el-menu-item>
       </el-menu-item-group>
     </el-submenu>
   </el-menu>
@@ -31,16 +31,19 @@ export default {
     return {
       asideMenu: [
         {
+          name: 'home',
           path: '/',
           label: '首页',
           icon: 'location'
         },
         {
+          name: 'video',
           path: '/video',
           label: '视频管理',
           icon: 'video-play'
         },
         {
+          name: 'user',
           path: '/user',
           label: '用户管理',
           icon: 'user'
@@ -50,11 +53,13 @@ export default {
           icon: 'user',
           children: [
             {
+              name: 'page1',
               path: '/page1',
               label: '页面1',
               icon: 'setting'
             },
             {
+              name: 'page2',
               path: '/page2',
               label: '页面2',
               icon: 'setting'
@@ -62,6 +67,11 @@ export default {
           ]
         }
       ]
+    }
+  },
+  methods: {
+    clickMenu(item) {
+      this.$store.commit('selectMenu', item)
     }
   }
 }
