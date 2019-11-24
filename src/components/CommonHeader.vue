@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="l-content">
-      <el-button type="primary" icon="el-icon-menu" size="mini"></el-button>
+      <el-button type="primary" icon="el-icon-menu" size="mini" @click="collapseMenu"></el-button>
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item :to="current.path" v-if="current">{{ current.label }}</el-breadcrumb-item>
@@ -30,6 +30,11 @@ export default {
   data() {
     return {
       userImg: require('../assets/images/user.png')
+    }
+  },
+  methods: {
+    collapseMenu() {
+      this.$store.commit('collapseMenu')
     }
   }
 }
