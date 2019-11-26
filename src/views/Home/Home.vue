@@ -31,14 +31,14 @@
         </el-card>
       </div>
       <el-card shadow="hover">
-        <div style="height: 280px;"></div>
+        <echart style="height: 280px;" :chartData="echartData.order"></echart>
       </el-card>
       <div class="graph">
         <el-card shadow="hover">
-          <div style="height: 260px;"></div>
+          <echart style="height: 260px;"></echart>
         </el-card>
         <el-card shadow="hover">
-          <div style="height: 260px;"></div>
+          <echart style="height: 260px;"></echart>
         </el-card>
       </div>
     </el-col>
@@ -46,7 +46,12 @@
 </template>
 
 <script>
+import echart from '../../components/EChart.vue'
+
 export default {
+  components: {
+    echart
+  },
   data() {
     return {
       userImg: require('../../assets/images/user.png'),
@@ -94,6 +99,19 @@ export default {
         todayBuy: '今日购买',
         monthBuy: '本月购买',
         totalBuy: '总购买'
+      },
+      echartData: {
+        order: {
+          xData: [],
+          series: []
+        },
+        user: {
+          xData: [],
+          series: []
+        },
+        video: {
+          series: []
+        }
       }
     }
   },
@@ -104,7 +122,20 @@ export default {
   methods: {
     getTableData() {
       this.$http.get('/home/getData').then(res => {
+        console.log(res.data)
         this.tableData = res.data.data.tableData
+        // 订单折线图
+        const order = res.data.data.orderData
+        this.echartData.order.xData = order.date
+        // 第一步：取出series中的name部分--键名
+        let keyArray = Object.keys(order.data[0])
+        keyArray.forEach(key => {
+          this.echartData.order.series.push({
+            name: key,
+            data: order.data.map(item => item[key]),
+            type: 'line'
+          })
+        })
       })
     }
   }
