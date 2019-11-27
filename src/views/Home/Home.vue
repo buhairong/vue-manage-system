@@ -35,10 +35,10 @@
       </el-card>
       <div class="graph">
         <el-card shadow="hover">
-          <echart style="height: 260px;"></echart>
+          <echart style="height: 260px;" :chartData="echartData.user"></echart>
         </el-card>
         <el-card shadow="hover">
-          <echart style="height: 260px;"></echart>
+          <echart style="height: 260px;" :chartData="echartData.video" :isAxisChart="false"></echart>
         </el-card>
       </div>
     </el-col>
@@ -135,6 +135,27 @@ export default {
             data: order.data.map(item => item[key]),
             type: 'line'
           })
+        })
+
+        // 柱状图
+        const user = res.data.data.userData
+        this.echartData.user.xData = user.map(item => item.date)
+        this.echartData.user.series.push({
+          name: '新增用户',
+          data: user.map(item => item.new),
+          type: 'bar'
+        })
+        this.echartData.user.series.push({
+          name: '活跃用户',
+          data: user.map(item => item.active),
+          type: 'bar'
+        })
+
+        // 饼图
+        const video = res.data.data.videoData
+        this.echartData.video.series.push({
+          data: video,
+          type: 'pie'
         })
       })
     }
