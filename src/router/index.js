@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
-  {
+  /*{
     path: '/',
     component: () => import('@/views/Main'),
     children: [
@@ -34,6 +34,15 @@ const routes = [
         component: () => import('@/views/Other/PageTwo')
       }
     ]
+  },*/
+  {
+    path: '/',
+    component: () => import('@/views/Login/Login')
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/Login/Login')
   }
 ]
 
