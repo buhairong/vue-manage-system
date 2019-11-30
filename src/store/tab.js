@@ -24,10 +24,10 @@ export default {
       Cookie.remove('menu')
     },
     addMenu(state, router) {
-      let menu = JSON.parse(Cookie.get('menu'))
-      if (!menu) {
+      if (!Cookie.get('menu')) {
         return
       }
+      let menu = JSON.parse(Cookie.get('menu'))
       state.menu = menu
       let currentMenu = [
         {
